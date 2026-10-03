@@ -44,6 +44,57 @@ footer .footer-content a:hover {
   text-decoration: underline;
 }
 
+/* --------------------------------------------------------------------------
+   2b. 页脚品牌标志（Cloudflare / SpanNova Studio）
+   标志与文字在同一行内垂直居中对齐，悬停时不下划线（避免图标被划线穿过）
+   -------------------------------------------------------------------------- */
+footer .footer-content .footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45em;
+  vertical-align: middle;
+  text-decoration: none !important;
+}
+
+footer .footer-content .footer-logo {
+  flex: 0 0 auto;
+  width: auto;
+  color: var(--footer-logo-color, currentColor);
+  /* 与相邻文字视觉重量对齐 */
+  height: 1.35em;
+  vertical-align: middle;
+}
+
+/* 位图 logo（SpanNova）需要略高一些才与文字基线协调 */
+footer .footer-content .footer-logo-img {
+  height: 2.2em;
+  width: auto;
+  opacity: 0.9;
+  transition: opacity 0.2s ease;
+}
+
+footer .footer-content .footer-brand:hover .footer-logo-img {
+  opacity: 1;
+}
+
+footer .footer-content .footer-brand:hover span {
+  text-decoration: underline;
+}
+
+footer .footer-content .footer-sep {
+  margin: 0 0.4em;
+  opacity: 0.5;
+}
+
+/* 赞助行（SpanNova Studio）单独一行，稍作强调 */
+footer .footer-content .footer-sponsor {
+  margin-top: 0.6em;
+}
+
+footer .footer-content .footer-sponsor .footer-brand span {
+  font-weight: 500;
+}
+
 /* 移动端页脚字号与行距 */
 @media (max-width: 768px) {
   footer .footer-content .footer-line {
