@@ -91,10 +91,13 @@ node serve-404.js 4400
 ├── scaffolds/             # 新文章模板
 ├── source/
 │   ├── 404.html           # 404 页面（skip_render，完全独立不套主题）
+│   ├── _headers           # Cloudflare Pages 响应头（构建后复制到 public/）
 │   ├── css/custom.css     # 自定义样式覆盖
 │   ├── img/               # 图标、头像、banner
 │   ├── about/index.md     # 关于页
 │   └── _posts/            # 文章
+├── scripts/
+│   └── cloudflare-pages.js # 构建后复制 _headers 的钩子
 └── public/                # 构建产物（不提交到 git）
 ```
 
@@ -146,22 +149,47 @@ Cloudflare Pages 会自动将根目录的 `404.html` 用作自定义错误页，
 
 ### 方式一：Git 集成（推荐）
 
-1. 将本仓库推送到 GitHub
-2. 在 Cloudflare Pages 中连接该仓库
-3. 构建配置：
+1. 推送仓库到 GitHub
+2. Cloudflare Dashboard → **Workers & Pages** → Create → **Pages** → Connect to Git
+3. 选择仓库，构建配置填：
 
    | 项 | 值 |
    | --- | --- |
+   | Framework preset | None |
    | 构建命令 | `npm run build` |
    | 输出目录 | `public` |
-   | Node 版本 | `22`（由 `wrangler.toml` 指定） |
+   | Node 版本 | 环境变量 `NODE_VERSION` = `22` |
+
+4. 部署完成后在 **Custom domains** 绑定域名
+
+> ⚠️ **必须选择 "Pages" 而不是 "Workers"。**
+> 若误建成 Workers 项目，Cloudflare 会执行 `wrangler deploy` 并寻找 `./dist`，
+> 而本项目输出在 `public/`，构建会以
+> `Failed: error occurred while running deploy command` 失败。
+> 此时应删除该 Workers 项目，重新创建 Pages 项目。
+>
+> 另外，本项目**不使用也不需要 `wrangler.toml`** —— Pages 项目的构建配置
+> 在控制台里填写，响应头由 `source/_headers` 提供。
 
 ### 方式二：Wrangler CLI
 
 ```bash
 pnpm build
-npx wrangler pages deploy public --project-name=<你的项目名>
+npx wrangler pages deploy public --project-name=817class-site
 ```
+
+### 响应头与缓存
+
+`source/_headers` 由 `scripts/cloudflare-pages.js` 在构建后复制到 `public/_headers`，
+Cloudflare Pages 会自动读取。
+
+> **为什么需要这个脚本**：Hexo 会忽略 `source/` 下划线开头的文件（视为特殊文件
+> 而非静态资源），所以 `_headers` 不会自动出现在 `public/` 中，必须用
+> `after_generate` 钩子手动复制。
+
+### 404 处理
+
+Cloudflare Pages 自动将输出目录根部的 `404.html` 作为自定义错误页，无需配置。
 
 ---
 
