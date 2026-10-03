@@ -1,0 +1,25 @@
+# 依赖
+node_modules/
+
+# Hexo 构建产物
+public/
+db.json
+.deploy_git/
+.hexo/
+
+# 日志
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# 编辑器与系统
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+
+# Cloudflare / Wrangler
+.wrangler/

@@ -1,0 +1,31 @@
+{
+  "name": "cwbs-817-portal",
+  "version": "1.0.0",
+  "private": true,
+  "description": "屯留一中817班班级网站 | Tunliu District No.1 Middle School Class 817 Information Portal",
+  "scripts": {
+    "build": "hexo generate",
+    "clean": "hexo clean",
+    "server": "hexo server",
+    "deploy": "hexo deploy"
+  },
+  "hexo": {
+    "version": "8.1.2"
+  },
+  "dependencies": {
+    "hexo": "^8.1.2",
+    "hexo-generator-archive": "^2.0.0",
+    "hexo-generator-category": "^2.0.0",
+    "hexo-generator-index": "^4.0.0",
+    "hexo-generator-tag": "^2.0.0",
+    "hexo-pagination": "^4.0.0",
+    "hexo-renderer-ejs": "^2.0.0",
+    "hexo-renderer-marked": "^7.0.0",
+    "hexo-renderer-stylus": "^3.0.1",
+    "hexo-server": "^3.0.0",
+    "hexo-theme-fluid": "^1.9.9",
+    "hexo-util": "^4.0.0",
+    "moment": "^2.30.1",
+    "nunjucks": "^3.2.4"
+  }
+}

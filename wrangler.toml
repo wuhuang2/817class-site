@@ -1,0 +1,42 @@
+# Cloudflare Pages 部署配置
+# 参考: https://developers.cloudflare.com/pages/configuration/
+
+[build]
+  # 构建命令
+  command = "npm run build"
+  # 发布目录（Hexo 默认输出到 public）
+  publish = "public"
+
+[build.environment]
+  NODE_VERSION = "22"
+
+# ---------------------------------------------------------------------------
+# 404 处理
+# Cloudflare Pages 会默认使用根目录的 404.html 作为自定义错误页，
+# 本项目由 Hexo 生成 public/404.html（source/404.html，已设 skip_render
+# 保持完全独立），无需额外配置即可生效。
+# ---------------------------------------------------------------------------
+
+# 安全与缓存响应头
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+# 静态资源长缓存（文件名带哈希的构建产物）
+[[headers]]
+  for = "/css/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/js/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+[[headers]]
+  for = "/img/*"
+  [headers.values]
+    Cache-Control = "public, max-age=604800"
