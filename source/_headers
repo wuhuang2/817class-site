@@ -3,6 +3,12 @@
 #
 # 说明：本文件会被 Hexo 从 source/ 原样复制到 public/_headers，
 # Cloudflare Pages 部署后自动读取。
+#
+# ⚠️ 缓存策略注意：
+# 本项目的 CSS/JS 文件名**不带哈希指纹**（如 css/custom.css 固定不变），
+# 因此绝不能使用 `immutable` + 长 max-age，否则内容更新后
+# Cloudflare 边缘与浏览器都会一直沿用旧文件，导致「改了却看不到」。
+# 这里统一改为 must-revalidate，让浏览器每次校验 ETag。
 
 /*
   X-Content-Type-Options: nosniff
@@ -10,15 +16,17 @@
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=()
 
-# 带哈希指纹的构建产物可长期缓存
+# CSS / JS：文件名无指纹，必须校验，不能长期强缓存
 /css/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=0, must-revalidate
 
 /js/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=0, must-revalidate
 
+# 图片：文件名同样无指纹（favicon.png、default.webp 等），
+# 但变更频率低，给一个较短的缓存并允许校验
 /img/*
-  Cache-Control: public, max-age=604800
+  Cache-Control: public, max-age=3600, must-revalidate
 
 # HTML 不缓存，保证内容更新即时可见
 /*.html
