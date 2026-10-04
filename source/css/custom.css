@@ -69,8 +69,32 @@ footer .footer-content .footer-logo {
 footer .footer-content .footer-logo-img {
   height: 2.2em;
   width: auto;
+  /* 防止被 Flex 拉伸或按原始尺寸撑开 */
+  max-height: 2.2em;
+  flex: 0 0 auto;
+  align-self: center;
+  object-fit: contain;
   opacity: 0.9;
   transition: opacity 0.2s ease;
+}
+
+/* --- SpanNova logo 明暗自适应 ---
+   亮色主题显示黑色版，暗色主题显示白色版。
+   复用 Fluid 自身的配色机制（见主题 color-schema.styl）：
+     - 用户手动切换：html[data-user-color-scheme="dark"]
+     - 未手动指定时跟随系统：:root:not([data-user-color-scheme]) + --color-mode
+   默认（浅色）显示黑色版。 */
+footer .footer-content .footer-logo-dark { display: none; }
+footer .footer-content .footer-logo-light { display: inline-block; }
+
+/* 用户手动切换到暗色 */
+html[data-user-color-scheme="dark"] footer .footer-content .footer-logo-light { display: none; }
+html[data-user-color-scheme="dark"] footer .footer-content .footer-logo-dark { display: inline-block; }
+
+/* 未手动指定时，跟随系统暗色 */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-user-color-scheme]) footer .footer-content .footer-logo-light { display: none; }
+  :root:not([data-user-color-scheme]) footer .footer-content .footer-logo-dark { display: inline-block; }
 }
 
 footer .footer-content .footer-brand:hover .footer-logo-img {

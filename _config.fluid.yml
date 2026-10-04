@@ -493,7 +493,8 @@ footer:
     </p>
     <p class="footer-line footer-sponsor">
       <a class="footer-brand" href="https://www.jytq.top" target="_blank" rel="noopener">
-        <img class="footer-logo footer-logo-img" src="/img/spannova@2x.png" alt="锦云天堑工作室 SpanNova Studio" loading="lazy">
+        <img class="footer-logo footer-logo-img footer-logo-light" src="/img/spannova-dark.png" alt="锦云天堑工作室 SpanNova Studio" lazyload="off">
+        <img class="footer-logo footer-logo-img footer-logo-dark" src="/img/spannova@2x.png" alt="" aria-hidden="true" lazyload="off">
         <span>由锦云天堑工作室（SpanNova Studio）提供域名赞助</span>
       </a>
     </p>
